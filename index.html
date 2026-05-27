@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- BASIC PAGE SETTINGS -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- PAGE TITLE -->
+  <title>Company Name | Home</title>
+
+  <!-- CSS FILE -->
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <!-- ========================= -->
+  <!-- HEADER / NAVIGATION -->
+  <!-- ========================= -->
+
+  <header>
+
+    <div class="navbar">
+
+      <!-- LOGO SECTION -->
+      <a href="index.html" class="logo-container">
+
+      <div class="logo-container">
+
+        <img
+          src="images/gaypeople.png"
+          alt="Company Logo"
+          class="logo-image"
+        >
+        
+    </a>
+        <div class="logo-text">
+          Company Name
+        </div>
+
+      </div>
+
+      <!-- NAVIGATION LINKS -->
+      <nav class="nav-links">
+
+        <a href="index.html" class="active">
+          Home
+        </a>
+
+        <a href="about.html">
+          About
+        </a>
+
+        <a href="products.html">
+          Products
+        </a>
+
+        <a href="contact.html">
+          Contact
+        </a>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+  <!-- ========================= -->
+  <!-- HERO SECTION -->
+  <!-- ========================= -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <h1>
+        Professional Modern Solutions
+      </h1>
+
+      <p>
+        Blah blah blah blah blah blah blah blah blah blah blah blah.
+      </p>
+
+      <!-- ========================= -->
+      <!-- PRE-REGISTRATION FORM -->
+      <!-- ========================= -->
+
+      <form class="pre-register" id="email-form">
+
+        <!-- NAME INPUT -->
+        <input
+          type="text"
+          id="name"
+          placeholder="Enter your name"
+          required
+        >
+
+        <!-- EMAIL INPUT -->
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+          required
+        >
+
+        <!-- SUBMIT BUTTON -->
+        <button type="submit">
+          Pre-Register
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Company Name. All rights reserved.
+  </footer>
+
+  <!-- ========================= -->
+  <!-- FORM SCRIPT -->
+  <!-- ========================= -->
+
+  <script>
+
+    /* ========================= */
+    /* EMAIL FORM */
+    /* ========================= */
+
+    const form = document.getElementById("email-form");
+
+    form.addEventListener("submit", async (e) => {
+
+      e.preventDefault();
+
+      const name = document
+        .getElementById("name")
+        .value
+        .trim();
+
+      const email = document
+        .getElementById("email")
+        .value
+        .trim()
+        .toLowerCase();
+
+      try {
+
+        const response = await fetch(
+          "https://script.google.com/macros/s/AKfycbyG5DTQIJhG-tbp6EH6VshlZC3_KiFPb4TqiQcdcVSWJQKssCXDRdDPfKwJTGGKDbbf/exec",
+          {
+            method: "POST",
+
+            body: JSON.stringify({
+              name,
+              email
+            })
+          }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+          alert("Successfully pre-registered!");
+
+          form.reset();
+
+        } else {
+
+          alert(result.message);
+
+        }
+
+      } catch (err) {
+
+        console.error(err);
+
+        alert("Something went wrong.");
+
+      }
+
+    });
+
+    /* ========================= */
+    /* HIDE NAVBAR ON SCROLL */
+    /* ========================= */
+
+    let lastScroll = 0;
+
+    const header = document.querySelector("header");
+
+    window.addEventListener("scroll", () => {
+
+      const currentScroll = window.pageYOffset;
+
+      // HIDE NAVBAR
+      if (
+        currentScroll > lastScroll &&
+        currentScroll > 100
+      ) {
+
+        header.classList.add("hide");
+
+      }
+
+      // SHOW NAVBAR
+      else {
+
+        header.classList.remove("hide");
+
+      }
+
+      lastScroll = currentScroll;
+
+    });
+
+  </script>
+
+</body>
+</html>
+```
