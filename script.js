@@ -1,51 +1,86 @@
-const form = document.getElementById("email-form");
+/* ========================= */
+/* CONTACT FORM */
+/* ========================= */
 
-form.addEventListener("submit", async (e) => {
+const contactForm =
+  document.getElementById("contact-form");
 
-  e.preventDefault();
+contactForm.addEventListener(
+  "submit",
+  async (e) => {
 
-  const name = document
-    .getElementById("name")
-    .value
-    .trim();
+    e.preventDefault();
 
-  const email = document
-    .getElementById("email")
-    .value
-    .trim()
-    .toLowerCase();
+    const name =
+      document.getElementById("contact-name")
+      .value
+      .trim();
 
-  try {
+    const email =
+      document.getElementById("contact-email")
+      .value
+      .trim()
+      .toLowerCase();
 
-    const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbyG5DTQIJhG-tbp6EH6VshlZC3_KiFPb4TqiQcdcVSWJQKssCXDRdDPfKwJTGGKDbbf/exec",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          name,
-          email
-        })
+    const phone =
+      document.getElementById("contact-phone")
+      .value
+      .trim();
+
+    const issue =
+      document.getElementById("contact-issue")
+      .value
+      .trim();
+
+    try {
+
+      const response = await fetch(
+        "https://script.google.com/macros/s/AKfycbzIDUrvoBL8RVwHfV9I29vcVXs9QJmuu3bPAN0drs4ffSRx0x4RsJqC63wn3SxXnJXaCg/exec",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            name,
+            email,
+            phone,
+            issue
+          })
+        }
+      );
+
+      const result =
+        await response.json();
+
+      if (result.success) {
+
+        alert(
+          "Request submitted successfully!"
+        );
+
+        contactForm.reset();
+
+      } else {
+
+        alert(
+          result.message ||
+          "Unable to submit request."
+        );
+
       }
-    );
 
-    const result = await response.json();
+    } catch (error) {
 
-    if (result.success) {
+      console.error(error);
 
-      alert("Successfully registered!");
-      form.reset();
-
-    } else {
-
-      alert(result.message);
+      alert(
+        "Something went wrong. Please try again."
+      );
 
     }
 
-  } catch (error) {
-
-    console.error(error);
-    alert("Something went wrong.");
-
   }
-
-});
+);

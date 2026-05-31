@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Company Name | Contact</title>
+  <title>Ausor | Contact</title>
 
   <link rel="stylesheet" href="style.css">
 
@@ -13,7 +13,10 @@
 
 <body>
 
+  <!-- ========================= -->
   <!-- HEADER -->
+  <!-- ========================= -->
+
   <header>
 
     <div class="navbar">
@@ -23,7 +26,7 @@
 
         <img
           src="images/gaypeople.png"
-          alt="Company Logo"
+          alt="Ausor Logo"
           class="logo-image"
         >
 
@@ -44,10 +47,6 @@
           About
         </a>
 
-        <a href="products.html">
-          Products
-        </a>
-
         <a href="contact.html" class="active">
           Contact
         </a>
@@ -58,10 +57,13 @@
 
   </header>
 
+  <!-- ========================= -->
   <!-- CONTACT SECTION -->
+  <!-- ========================= -->
+
   <section class="page-section">
 
-    <div class="container fade-in">
+    <div class="container">
 
       <h1 class="page-title">
         Contact Us
@@ -69,17 +71,41 @@
 
       <div class="contact-box">
 
-        <p>
-          Email: blahblah@email.com
-        </p>
+        <form id="contact-form">
 
-        <p>
-          Business: blahblah@email.com
-        </p>
+          <input
+            type="text"
+            id="contact-name"
+            placeholder="Your Name"
+            required
+          >
 
-        <p>
-          Blah blah blah blah blah blah blah blah blah blah blah.
-        </p>
+          <input
+            type="email"
+            id="contact-email"
+            placeholder="Email Address"
+            required
+          >
+
+          <input
+            type="tel"
+            id="contact-phone"
+            placeholder="Phone Number"
+            required
+          >
+
+          <textarea
+            id="contact-issue"
+            placeholder="Describe your project, issue, or request..."
+            rows="6"
+            required
+          ></textarea>
+
+          <button type="submit">
+            Submit Request
+          </button>
+
+        </form>
 
       </div>
 
@@ -87,40 +113,98 @@
 
   </section>
 
+  <!-- ========================= -->
   <!-- FOOTER -->
+  <!-- ========================= -->
+
   <footer>
-    © 2026 Company Name. All rights reserved.
+    © 2026 Ausor. All rights reserved.
   </footer>
 
-  <!-- NAVBAR SCROLL SCRIPT -->
   <script>
 
-    let lastScroll = 0;
+  /* ========================= */
+  /* CONTACT FORM */
+  /* ========================= */
 
-    const header = document.querySelector("header");
+  const contactForm =
+    document.getElementById("contact-form");
 
-    window.addEventListener("scroll", () => {
+  contactForm.addEventListener(
+    "submit",
+    async (e) => {
 
-      const currentScroll = window.pageYOffset;
+      e.preventDefault();
 
-      if (
-        currentScroll > lastScroll &&
-        currentScroll > 100
-      ) {
+      const name =
+        document.getElementById("contact-name")
+        .value
+        .trim();
 
-        header.classList.add("hide");
+      const email =
+        document.getElementById("contact-email")
+        .value
+        .trim()
+        .toLowerCase();
 
-      } else {
+      const phone =
+        document.getElementById("contact-phone")
+        .value
+        .trim();
 
-        header.classList.remove("hide");
+      const issue =
+        document.getElementById("contact-issue")
+        .value
+        .trim();
+
+      try {
+
+        const response = await fetch(
+          "https://script.google.com/macros/s/AKfycbxcXq8Om2mYrG_XLAW4-9WwuLTdAy5hKIqaEtMODlh7EVb_643k7TFtDNvjhG4oAXXp-A/exec",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              name,
+              email,
+              phone,
+              issue
+            })
+          }
+        );
+
+        const result =
+          await response.json();
+
+        if (result.success) {
+
+          alert(
+            "Request submitted successfully!"
+          );
+
+          contactForm.reset();
+
+        } else {
+
+          alert(
+            result.message ||
+            "Unable to submit request."
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert(
+          "Something went wrong. Please try again."
+        );
 
       }
 
-      lastScroll = currentScroll;
+    }
+  );
 
-    });
-
-  </script>
-
+</script>
 </body>
 </html>
